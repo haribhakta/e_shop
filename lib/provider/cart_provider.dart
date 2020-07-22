@@ -37,19 +37,24 @@ class Cart with ChangeNotifier {
               title: existingCartItem.title,
               price: existingCartItem.price,
               quantity: existingCartItem.quantity + 1));
-    }
-    else 
-    {
-      _items.putIfAbsent(productId, () => 
-      CartItem(
-        id: DateTime.now().toString(),
-        title: title,
-        price: price,
-        quantity: 1
-      )
-      );
-
+    } else {
+      _items.putIfAbsent(
+          productId,
+          () => CartItem(
+              id: DateTime.now().toString(),
+              title: title,
+              price: price,
+              quantity: 1));
     }
     notifyListeners();
+  }
+
+  //total amount in the cart
+  double get totalAmount {
+    double total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.quantity * cartItem.price;
+    });
+    return total;
   }
 }

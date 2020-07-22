@@ -3,6 +3,7 @@ import 'package:e_shop/wigdets/badge.dart';
 import 'package:e_shop/wigdets/product_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../screens/cart_screen.dart';
 
 enum FilterOptions { Favorites, All }
 
@@ -46,7 +47,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             },
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
             ),
           ),
         ],
