@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import './provider/products.dart';
 import './screens/product_details_screen.dart';
 import './screens/cart_screen.dart';
+import './provider/order_provider.dart';
+import './screens/order_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => Orders(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -32,7 +37,8 @@ class MyApp extends StatelessWidget {
         home: ProductOverviewScreen(),
         routes: {
           ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
-          CartScreen.routeName: (ctx) => CartScreen()
+          CartScreen.routeName: (ctx) => CartScreen(),
+           OrderScreen.routeName: (ctx) => OrderScreen()
         },
       ),
     );
