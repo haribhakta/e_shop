@@ -3,7 +3,6 @@ import '../wigdets/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/order_provider.dart';
-import '../screens/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static const String routeName = "/cart_screen";
@@ -43,7 +42,6 @@ class CartScreen extends StatelessWidget {
                       order.addOrder(
                           cart.items.values.toList(), cart.totalAmount);
                       cart.clearCart();
-                      Navigator.pushNamed(context, OrderScreen.routeName);
                     },
                     child: Text(
                       "ORDER NOW",

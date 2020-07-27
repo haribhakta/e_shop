@@ -3,11 +3,14 @@ import 'package:e_shop/wigdets/badge.dart';
 import 'package:e_shop/wigdets/product_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screens/cart_screen.dart';
+import 'cart_screen.dart';
+import '../wigdets/app_drawer.dart';
 
+//show or not show favourites
 enum FilterOptions { Favorites, All }
 
 class ProductOverviewScreen extends StatefulWidget {
+  static const String routeName = "/product_overview_screen";
   @override
   _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
@@ -54,6 +57,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ),
         ],
       ),
+       drawer: AppDrawer(),
       body: ProductGrid(_showfavorites),
     );
   }
