@@ -1,4 +1,5 @@
 import 'package:e_shop/provider/cart_provider.dart';
+import 'package:e_shop/provider/products.dart';
 import 'package:e_shop/wigdets/badge.dart';
 import 'package:e_shop/wigdets/product_grid.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +17,21 @@ class ProductOverviewScreen extends StatefulWidget {
 }
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
-  bool _showfavorites = false;
+  bool _showFavourites = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("E-shop"),
+        title: Text("E-Shop"),
         actions: <Widget>[
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             onSelected: (FilterOptions selectedOption) {
               setState(() {
                 if (selectedOption == FilterOptions.Favorites) {
-                  _showfavorites = true;
+                  _showFavourites = true;
                 } else {
-                  _showfavorites = false;
+                  _showFavourites = false;
                 }
               });
             },
@@ -58,7 +59,16 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
        drawer: AppDrawer(),
-      body: ProductGrid(_showfavorites),
+      body: FutureBuilder(
+        future:
+        Provider.of<Products>(context, listen: false).fetchAndSetProducts(),
+        builder: (ctx, snapshot) =>
+        snapshot.connectionState == ConnectionState.waiting
+            ? Center(
+          child: CircularProgressIndicator(),
+        )
+            : ProductGrid(_showFavourites),
+      ),
     );
   }
 }
