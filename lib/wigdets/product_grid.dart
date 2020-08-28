@@ -1,4 +1,4 @@
-import 'package:e_shop/provider/products.dart';
+import 'package:e_shop/provider/products_provider.dart';
 import 'package:e_shop/wigdets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

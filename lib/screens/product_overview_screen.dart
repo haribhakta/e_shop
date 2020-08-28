@@ -1,5 +1,5 @@
 import 'package:e_shop/provider/cart_provider.dart';
-import 'package:e_shop/provider/products.dart';
+import 'package:e_shop/provider/products_provider.dart';
 import 'package:e_shop/wigdets/badge.dart';
 import 'package:e_shop/wigdets/product_grid.dart';
 import 'package:flutter/material.dart';

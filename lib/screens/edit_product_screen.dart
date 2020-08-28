@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../provider/products.dart';
+import '../provider/products_provider.dart';
 import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -97,7 +97,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   //save form and add product or edit product
-  void _saveForm() {
+  Future<void> _saveForm() async {
     //validation check
     bool isValid = _form.currentState.validate();
     if (!isValid) {
@@ -108,41 +108,40 @@ class _EditProductScreenState extends State<EditProductScreen> {
     setState(() {
       _showLoading = true;
     });
-
-    if (_editProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
-          .updateProduct(_editProduct.id, _editProduct);
-    } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editProduct)
-          .then((_) {
-        setState(() {
-          _showLoading = false;
-        });
-        Navigator.pop(context);
-      }).catchError((error) {
-        return showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: Text("Error Occured"),
-                  content:
-                      Text("Something has occured! Product cannot be added"),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        setState(() {
-                          _showLoading = false;
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text("OK"),
-                    )
-                  ],
-                ));
-      });
-    }
-  }
+try{
+        if (_editProduct.id != null) {
+            await Provider.of<Products>(context, listen: false)
+                .updateProduct(_editProduct.id, _editProduct);
+          } else {
+            await Provider.of<Products>(context, listen: false)
+                .addProduct(_editProduct);
+          }
+        } catch (error) {
+          return showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: Text("Error Occured"),
+                    content: Text("Something has occured! Product cannot be added"),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            _showLoading = false;
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: Text("OK"),
+                      )
+                    ],
+                  ));
+        } finally {
+          setState(() {
+            _showLoading = false;
+          });
+          Navigator.pop(context);
+        }
+      }
 
   @override
   Widget build(BuildContext context) {
